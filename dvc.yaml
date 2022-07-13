@@ -1,5 +1,3 @@
- 894 Bytes
-
 stages:
   load_data:
     cmd: python src/load_data.py --config=params.yaml
