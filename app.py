@@ -6,8 +6,7 @@ import numpy as np
 import yaml
 import joblib
 
-# from prediction_service import prediction
-params_path = "params.yaml"
+from prediction_service import prediction
 webapp_root = "webapp"
 
 
@@ -16,54 +15,31 @@ template_dir = os.path.join(webapp_root, "templates")
 
 app = Flask(__name__, static_folder=static_dir,template_folder=template_dir)
 
-def read_params(config_path):
-    with open(config_path) as yaml_file:
-        config = yaml.safe_load(yaml_file)
-    return config 
-
-def predict(data):
-    config = read_params(params_path)
-    model_dir_path = config["webapp_model_dir"]
-    model = joblib.load(model_dir_path)
-    prediction = model.predict(data)
-    print(prediction)
-    return(prediction)
-
-def api_response(request):
-    pass
-
-
-
-
-
-
-
 @app.route("/", methods=["GET", "POST"])
 def index():
-
     if request.method == "POST":
         pass
         try:
+            # if request.form:
+            #     data = dict(request.form).values()
+            #     data = [list(map(float,data))]
+            #     response = predict(data)
+            #     return render_template("index.html", response=response)
+            # elif request.json:
+            #     response = api_response(request)
+            #     return jsonify(response)
             if request.form:
-                data = dict(request.form).values()
-                data = [list(map(float,data))]
-                response = predict(data)
+                dict_req = dict(request.form)
+                response = prediction.form_response(dict_req)
                 return render_template("index.html", response=response)
+
             elif request.json:
-                response = api_response(request)
+                response = prediction.api_response(request.json)
                 return jsonify(response)
-
-
-        #         dict_req = dict(request.form)
-        #         response = prediction.form_response(dict_req)
-        #         return render_template("index.html", response=response)
-        #     elif request.json:
-        #         response = prediction.api_response(request.json)
-        #         return jsonify(response)
 
         except Exception as e:
             print(e)
-            error = {"error": "Something went wrong!! Try again later!"}
+            # error = {"error": "Something went wrong!! Try again later!"}
             error = {"error": e}
 
             return render_template("404.html", error=error)

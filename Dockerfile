@@ -1,6 +1,8 @@
-FROM continuumio/anaconda3:4.12.0
-COPY . /usr/app/
+# syntax=docker/dockerfile:1
+FROM python:3.7.13
+# COPY . /usr/app/
 EXPOSE 5000
-WORKDIR /usr/app/
+COPY requirements.txt requirements.txt
+COPY app.py app.py
 RUN pip install -r requirements.txt
 CMD python app.py
