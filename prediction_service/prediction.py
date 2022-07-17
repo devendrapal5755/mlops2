@@ -64,30 +64,30 @@ def validate_input(dict_request):
     return True
 
 
-def form_response(dict_request):
-    if validate_input(dict_request):
-        data = dict_request.values()
-        data = [list(map(float, data))]
-        response = predict(data)
-        return response
+# def form_response(dict_request):
+#     if validate_input(dict_request):
+#         data = dict_request.values()
+#         data = [list(map(float, data))]
+#         response = predict(data)
+#         return response
 
-def api_response(dict_request):
-    try:
-        if validate_input(dict_request):
-            data = np.array([list(dict_request.values())])
-            response = predict(data)
-            response = {"response": response}
-            return response
+# def api_response(dict_request):
+#     try:
+#         if validate_input(dict_request):
+#             data = np.array([list(dict_request.values())])
+#             response = predict(data)
+#             response = {"response": response}
+#             return response
             
-    except NotInRange as e:
-        response = {"the_exected_range": get_schema(), "response": str(e) }
-        return response
+#     except NotInRange as e:
+#         response = {"the_exected_range": get_schema(), "response": str(e) }
+#         return response
 
-    except NotInCols as e:
-        response = {"the_exected_cols": get_schema().keys(), "response": str(e) }
-        return response
+#     except NotInCols as e:
+#         response = {"the_exected_cols": get_schema().keys(), "response": str(e) }
+#         return response
 
 
-    except Exception as e:
-        response = {"response": str(e) }
-        return response
+#     except Exception as e:
+#         response = {"response": str(e) }
+#         return response

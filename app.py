@@ -12,6 +12,8 @@ webapp_root = "webapp"
 
 static_dir = os.path.join(webapp_root, "static")
 template_dir = os.path.join(webapp_root, "templates")
+print(static_dir)
+print(template_dir)
 
 app = Flask(__name__, static_folder=static_dir,template_folder=template_dir)
 
@@ -38,6 +40,8 @@ def index():
                 return jsonify(response)
 
         except Exception as e:
+            print(template_dir)
+            print(static_dir)
             print(e)
             # error = {"error": "Something went wrong!! Try again later!"}
             error = {"error": e}
